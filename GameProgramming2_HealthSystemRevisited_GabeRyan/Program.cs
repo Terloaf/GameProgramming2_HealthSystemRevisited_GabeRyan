@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -122,7 +123,14 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
 
             public string GetStatusString()
             {
-
+                if (_health == 0)
+                {
+                    
+                }
+                else
+                {
+                    return;
+                }
             }
 
             public Player(string name, int maxHealth, int maxShield);
