@@ -26,9 +26,6 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
             public void TakeDmg(int dmg)
             {
                 
-
-                
-
                 if (dmg < 0)
                 {
                     
@@ -90,19 +87,13 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
 
             public static Health Shield { get; private set;}
 
-            int _shield = Shield.CurrentHealth;
-            int _health = Health.CurrentHealth;
-            
-
             public void TakeDamage(int dmg)
             {
-
-
-                if (dmg > _shield)
+                if (dmg > Shield.CurrentHealth)
                 {
-                    dmg -= _shield;
-                    _health -= dmg;
-                    _shield = 0;
+                    dmg -= Shield.CurrentHealth;
+                    Health.TakeDmg(dmg);
+                    
 
                     return;
                    
@@ -117,19 +108,23 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
 
                 _shield -= dmg;
 
-                GetStatusString();
+
 
             }
 
             public string GetStatusString()
             {
-                if (_health == 0)
+                if (_health == 100)
                 {
-                    
+                    return "You are in perfect health";
+                }
+                else if (_health >= 80)
+                {
+                    return "you are ok";
                 }
                 else
                 {
-                    return;
+                    return "you are dead";
                 }
             }
 
