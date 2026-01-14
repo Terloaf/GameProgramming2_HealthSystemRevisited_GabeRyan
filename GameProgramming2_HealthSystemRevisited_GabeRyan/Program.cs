@@ -12,7 +12,7 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
     {
         static bool _isPlaying = true;
         static Random random = new Random();
-
+        static Player _player;
         static void Main(string[] args)
         {
             Console.WriteLine("Please Enter Name");
@@ -20,21 +20,23 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
             string playerName = Console.ReadLine();
 
             Player player = new Player(name: playerName, maxHealth: 100, maxShield: 100);
+            _player = player;
 
             while (_isPlaying == true)
             {
+                
                 int randomHeal = random.Next(1, 21);
                 int randomDmg = random.Next(1, 21);
                 player.ShowHud();
 
                 Console.WriteLine("Press D to Heal and H to take dmg");
-                Console.ReadLine();
-
+                
+                
          
 
 
             }
-            
+
             
             
         }
