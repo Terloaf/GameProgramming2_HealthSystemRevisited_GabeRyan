@@ -13,15 +13,23 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
 
         static void Main(string[] args)
         {
+            Console.WriteLine("Please Enter Name");
+            
             
         }
 
         class Health
         {
+            
+            public int CurrentHealth { get; private set; }
+            public int MaxHealth { get; private set; } 
 
-            public int CurrentHealth { get;  private set; }
-            public int MaxHealth { get; private set; }
-
+            public Health(int MaximumHealth)
+            {
+            
+                MaxHealth = MaximumHealth;
+                CurrentHealth = MaxHealth;
+            }
 
             public void TakeDmg(int dmg)
             {
@@ -70,11 +78,7 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
 
             }
 
-            public void HealthConstructor(int maxHealth)
-            {
-                MaxHealth = maxHealth;
-                CurrentHealth = maxHealth;
-            }
+
         }
 
 
@@ -91,9 +95,10 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
             {
                 if (dmg > Shield.CurrentHealth)
                 {
-                    dmg -= Shield.CurrentHealth;
-                    Health.TakeDmg(dmg);
-                    
+                    int carryOver = dmg - Shield.CurrentHealth;
+
+                    Shield.TakeDmg(dmg);
+                    Health.TakeDmg(carryOver);
 
                     return;
                    
@@ -106,7 +111,7 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
                     return;
                 }
 
-                _shield -= dmg;
+                Shield.TakeDmg(dmg);
 
 
 
@@ -114,13 +119,17 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
 
             public string GetStatusString()
             {
-                if (_health == 100)
+                if (Health.CurrentHealth == 100)
                 {
                     return "You are in perfect health";
                 }
-                else if (_health >= 80)
+                else if (Health.CurrentHealth >= 50)
                 {
                     return "you are ok";
+                }
+                else if(Health.CurrentHealth >= 1)
+                {
+                    return "you are about to die";
                 }
                 else
                 {
@@ -128,7 +137,12 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
                 }
             }
 
-            public Player(string name, int maxHealth, int maxShield);
+            public Player(string name, int maxHealth, int maxShield)
+            {
+                Name = name;
+                Health = new Health(maxHealth);
+                Shield = new Health(maxShield);
+            }
         }
     }
 }
