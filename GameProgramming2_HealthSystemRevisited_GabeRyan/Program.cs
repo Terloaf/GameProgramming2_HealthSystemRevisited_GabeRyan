@@ -29,8 +29,7 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
                 int randomDmg = random.Next(1, 21);
                 player.ShowHud();
 
-                Console.WriteLine("Press D to Heal and H to take dmg");
-                
+
                 
          
 
