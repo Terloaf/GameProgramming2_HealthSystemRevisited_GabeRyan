@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,14 +10,36 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
 {
     internal class Program
     {
-
+        static bool _isPlaying = true;
+        static Random random = new Random();
 
         static void Main(string[] args)
         {
             Console.WriteLine("Please Enter Name");
+
+            string playerName = Console.ReadLine();
+
+            Player player = new Player(name: playerName, maxHealth: 100, maxShield: 100);
+
+            while (_isPlaying == true)
+            {
+                int randomHeal = random.Next(1, 21);
+                int randomDmg = random.Next(1, 21);
+                player.ShowHud();
+
+                Console.WriteLine("Press D to Heal and H to take dmg");
+                Console.ReadLine();
+
+         
+
+
+            }
+            
             
             
         }
+        
+        
 
         class Health
         {
@@ -87,18 +110,18 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
             
             public string Name { get; set; }
 
-            public static Health Health { get; private set; }
+            public Health _health { get; private set; }
 
-            public static Health Shield { get; private set;}
+            public Health _shield { get; private set;}
 
             public void TakeDamage(int dmg)
             {
-                if (dmg > Shield.CurrentHealth)
+                if (dmg > _shield.CurrentHealth)
                 {
-                    int carryOver = dmg - Shield.CurrentHealth;
+                    int carryOver = dmg - _shield.CurrentHealth;
 
-                    Shield.TakeDmg(dmg);
-                    Health.TakeDmg(carryOver);
+                    _shield.TakeDmg(dmg);
+                    _health.TakeDmg(carryOver);
 
                     return;
                    
@@ -111,7 +134,7 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
                     return;
                 }
 
-                Shield.TakeDmg(dmg);
+                _shield.TakeDmg(dmg);
 
 
 
@@ -119,15 +142,15 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
 
             public string GetStatusString()
             {
-                if (Health.CurrentHealth == 100)
+                if (_health.CurrentHealth == 100)
                 {
                     return "You are in perfect health";
                 }
-                else if (Health.CurrentHealth >= 50)
+                else if (_health.CurrentHealth >= 50)
                 {
                     return "you are ok";
                 }
-                else if(Health.CurrentHealth >= 1)
+                else if(_health.CurrentHealth >= 1)
                 {
                     return "you are about to die";
                 }
@@ -137,12 +160,19 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
                 }
             }
 
+            public void ShowHud()
+            {
+                Console.WriteLine($"Name: {Name} Health: {_health.CurrentHealth} Shield: {_shield.CurrentHealth}");
+            }
+
             public Player(string name, int maxHealth, int maxShield)
             {
                 Name = name;
-                Health = new Health(maxHealth);
-                Shield = new Health(maxShield);
+                _health = new Health(maxHealth);
+                _shield = new Health(maxShield);
             }
         }
+
+
     }
 }
