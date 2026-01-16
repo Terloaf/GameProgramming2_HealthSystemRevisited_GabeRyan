@@ -195,7 +195,7 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
 
             public void ShowHud()
             {
-                Console.WriteLine($"Name: {Name} Health: {_health.CurrentHealth} Shield: {_shield.CurrentHealth} Status: {_player.GetStatusString()}");
+                Console.WriteLine($"Name: {Name} Health: {_health.CurrentHealth} Shield: {_shield.CurrentHealth} Status: {GetStatusString()}");
 
 
             }
