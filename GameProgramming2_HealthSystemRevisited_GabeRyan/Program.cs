@@ -25,23 +25,54 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
             while (_isPlaying == true)
             {
                 
-                int randomHeal = random.Next(1, 21);
-                int randomDmg = random.Next(1, 21);
-                player.ShowHud();
-
-                Console.WriteLine("Press D to Heal and H to take dmg");
- 
                 
-         
-
-
+                
+                player.ShowHud();
+                Console.WriteLine("Press D To Take Damage And H To Heal");
+                Choice();
+ 
             }
 
             
             
+            
         }
         
-        
+        static void Choice()
+        {
+            ConsoleKey Input = Console.ReadKey(true).Key;
+
+            if(Input == ConsoleKey.D)
+            {
+                int randomDmg = random.Next(1, 21);
+                _player.TakeDamage(randomDmg);
+                Console.ReadKey();
+
+                GameOver();
+
+            }
+
+            else if(Input == ConsoleKey.H)
+            {
+                int randomHeal = random.Next(1, 21);
+                _player._health.Heal(randomHeal);
+                Console.ReadKey();
+            }
+        }
+
+        static void GameOver()
+        {
+            if (_player._health.CurrentHealth <= 0)
+            {
+
+                _player.GetStatusString();
+
+                Console.WriteLine("You Died! Press Any Key");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+
+        }
 
         class Health
         {
@@ -164,7 +195,9 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
 
             public void ShowHud()
             {
-                Console.WriteLine($"Name: {Name} Health: {_health.CurrentHealth} Shield: {_shield.CurrentHealth}");
+                Console.WriteLine($"Name: {Name} Health: {_health.CurrentHealth} Shield: {_shield.CurrentHealth} Status: {_player.GetStatusString()}");
+
+
             }
 
             public Player(string name, int maxHealth, int maxShield)
@@ -172,6 +205,7 @@ namespace GameProgramming2_HealthSystemRevisited_GabeRyan
                 Name = name;
                 _health = new Health(maxHealth);
                 _shield = new Health(maxShield);
+                
             }
         }
 
